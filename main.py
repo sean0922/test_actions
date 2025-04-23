@@ -5,7 +5,7 @@ url = "https://news.ycombinator.com/"
 resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
 soup = BeautifulSoup(resp.text, "html.parser")
 
-output_summary = "### Hacker News Headlines:\n\n"
+output_summary = ""
 
 # Method1 select
 output_summary += "**Method1 select:**\n"
