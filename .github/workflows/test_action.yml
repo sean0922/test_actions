@@ -3,8 +3,6 @@ name: Run Python Scraper
 on:
   push:
     branches: [ main ]
-  # schedule:
-  #   - cron: '0 1 * * *'
 
 jobs:
   scrape_news:
@@ -24,12 +22,8 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests beautifulsoup4
 
-    - name: Run main.py and generate output file
+    - name: Run main.py and capture output
       id: scrape
-      run: python main.py > output.txt
-
-    - name: Set output to summary
-      run: echo "summary=$(cat output.txt)" >> $GITHUB_OUTPUT
-
-    - name: Remove output file
-      run: rm output.txt
+      run: echo "OUTPUT<<EOF" >> $GITHUB_STEP_SUMMARY
+        python main.py >> $GITHUB_STEP_SUMMARY
+        echo "EOF" >> $GITHUB_STEP_SUMMARY
