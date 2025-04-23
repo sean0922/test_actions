@@ -3,8 +3,8 @@ name: Run Python Scraper
 on:
   push:
     branches: [ main ]
-  # schedule:
-  #   - cron: '0 1 * * *'  # 每天 UTC 時間 1 點 (台灣時間早上 9 點) 執行
+  schedule:
+    - cron: '0 1 * * *'
 
 jobs:
   scrape_news:
@@ -24,5 +24,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install requests beautifulsoup4
 
-    - name: Run main.py
+    - name: Run main.py and capture output
+      id: scrape
       run: python main.py
+
+    - name: Add output to summary
+      run: echo "::set-output name=summary::${{ steps.scrape.outputs._ }}"

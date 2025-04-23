@@ -4,12 +4,17 @@ from bs4 import BeautifulSoup
 url = "https://news.ycombinator.com/"
 resp = requests.get(url, headers={"User-Agent": "Mozilla/5.0"})
 soup = BeautifulSoup(resp.text, "html.parser")
-#Method1 select
-print("Method1 select")
-for item in soup.select("span.titleline a"):
-    print(item.text.strip())
 
-#Method2 find_all
-print('\n',"Method2 find_all")
+output_summary = "### Hacker News Headlines:\n\n"
+
+# Method1 select
+output_summary += "**Method1 select:**\n"
+for item in soup.select("span.titleline a"):
+    output_summary += f"- {item.text.strip()}\n"
+
+# Method2 find_all
+output_summary += "\n**Method2 find_all:**\n"
 for item in soup.find_all("span", class_="titleline"):
-    print(item.a.text.strip())
+    output_summary += f"- {item.a.text.strip()}\n"
+
+print(output_summary)
